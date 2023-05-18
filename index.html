@@ -1,46 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>クイズサイト</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>クイズ</title>
 <style>
 body {
-background-image: url('https://switch-box.net/wp-content/uploads/2014/09/bees-and-bombs-01.gif');
-background-size: cover;
-background-repeat: no-repeat;
+font-family: monospace;
 }
 
-h1 {
-color: white;
+.quiz {
+width: 400px;
+margin: 20px auto;
 }
 
-p {
-color: white;
+.question {
+font-size: 18px;
+}
+
+.answer {
+font-size: 16px;
+}
+
+.correct {
+color: green;
+}
+
+.incorrect {
+color: red;
 }
 </style>
 </head>
 <body>
-<h1>クイズサイト</h1>
-<p>このクイズに答えて、どれだけ知っているかを確かめてください！</p>
+<h1>クイズ</h1>
+<div class="quiz">
+<h2>最初の質問</h2>
+<p class="question">地球の月は何個ありますか？</p>
+<ul>
+<li class="answer">1</li>
+<li class="answer">2</li>
+<li class="answer">3</li>
+</ul>
+</div>
+<div class="quiz">
+<h2>2番目の質問</h2>
+<p class="question">日本の首都はどこですか？</p>
+<ul>
+<li class="answer">東京</li>
+<li class="answer">大阪</li>
+<li class="answer">名古屋</li>
+</ul>
+</div>
+<div class="quiz">
+<h2>3番目の質問</h2>
+<p class="question">太陽系には何個の惑星がありますか？</p>
+<ul>
+<li class="answer">8</li>
+<li class="answer">9</li>
+<li class="answer">10</li>
+</ul>
+</div>
+<input type="submit" value="提出">
+<input type="reset" value="リセット">
 
-<form action="/results">
-  <p>1. 日本の首都はどこですか？</p>
-  <input type="radio" name="question1" value="東京" /> <label for="東京">東京</label>
-  <input type="radio" name="question1" value="大阪" /> <label for="大阪">大阪</label>
-  <input type="radio" name="question1" value="京都" /> <label for="京都">京都</label>
+<script>
+function submitQuiz() {
+var answers = [];
+$('.answer').each(function() {
+if ($(this).prop('checked')) {
+answers.push($(this).val());
+}
+});
 
-  <p>2. 地球の周りの軌道を完了するのにかかる時間は？</p>
-  <input type="radio" name="question2" value="1年" /> <label for="1年">1年</label>
-  <input type="radio" name="question2" value="2年" /> <label for="2年">2年</label>
-  <input type="radio" name="question2" value="3年" /> <label for="3年">3年</label>
+// 結果をメールで送信する
+var email = prompt('結果を送信するメールアドレスを入力してください:');
+if (email) {
+var message = 'あなたの結果は次のとおりです。\n\n';
+for (var i = 0; i < answers.length; i++) {
+message += answers[i] + '\n';
+}
 
-  <p>3. 水の化学式は何ですか？</p>
-  <input type="radio" name="question3" value="H2O" /> <label for="H2O">H2O</label>
-  <input type="radio" name="question3" value="H2O2" /> <label for="H2O2">H2O2</label>
-  <input type="radio" name="question3" value="H3O" /> <label for="H3O">H3O</label>
+var mail = new XMLHttpRequest();
+mail.open('POST', 'mailto:' + email);
+mail.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
+mail.send(message + "\n現在時刻は" + new Date());
+}
+}
 
-  <input type="submit" value="送信" />
-</form>
-
-<p>結果は次のページで表示されます。</p>
+$('input[type="submit"]').on('click', submitQuiz);
+</script>
 </body>
 </html>
