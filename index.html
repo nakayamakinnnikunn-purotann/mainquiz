@@ -1,109 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>自由解答式クイズ</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-      #quiz {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
-      #question {
-        font-size: 2em;
-      }
-      #answer {
-        font-size: 1.5em;
-        margin-top: 1em;
-        padding: 0.5em;
-      }
-      button {
-        margin-top: 1em;
-        font-size: 1.5em;
-        padding: 0.5em 1em;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="quiz">
-      <h2 id="question"></h2>
-      <form>
-        <input type="text" id="answer" placeholder="回答を入力してください">
-        <button type="submit">回答する</button>
-      </form>
-    </div>
-    <script>
-      const questions = [
-{
-  question: "電子の流れと電流の流れは□になっている（漢字一文字）",
-  answer: "逆"
-},
-{
-  question: "電気抵抗が大きい物質のことを何というか。",
-  answer: "不導体"
-},
-{
-  question: "電気抵抗を表す単位は何か。（カタカナで答える）",
-  answer: "オーム"
-},
-{
-  question: "抵抗値が10Ωの抵抗器に、電圧5Vの電源を接続した場合、流れる電流の大きさは何Aか。",
-  answer: "0.5A"
-},
-{
-  question: "抵抗値が2Ωの抵抗器に、電流3Aの電源を接続した場合、電圧の大きさは何Vか。",
-  answer: "6V"
-},
-{
-  question: "抵抗値が4Ωの抵抗器と6Ωの抵抗器を直列に接続した場合、合成抵抗は何オームか。",
-  answer: "10オーム"
-},
-{
-  question: "抵抗値が8Ωの抵抗器と12Ωの抵抗器を並列に接続した場合、合成抵抗は何オームか。",
-  answer: "4.8オーム"
-},
-{
-  question: "電流が3Aの回路に、4Ωの抵抗器を直列に接続した場合、電圧は何Vか。",
-  answer: "12V"
+<head>
+<title>クイズサイト</title>
+<style>
+body {
+background-image: url('https://unsplash.it/400/400?image=1');
+background-size: cover;
+background-repeat: no-repeat;
 }
 
-      ];
+h1 {
+color: white;
+}
 
-      let currentQuestionIndex = 0;
+p {
+color: white;
+}
+</style>
+</head>
+<body>
+<h1>クイズサイト</h1>
+<p>このクイズに答えて、どれだけ知っているかを確かめてください！</p>
 
-      function displayCurrentQuestion() {
-        const currentQuestion = questions[currentQuestionIndex];
-        const questionElement = document.getElementById("question");
-        questionElement.textContent = currentQuestion.question;
-      }
+<form action="/results">
+  <p>1. 日本の首都はどこですか？</p>
+  <input type="radio" name="question1" value="東京" /> <label for="東京">東京</label>
+  <input type="radio" name="question1" value="大阪" /> <label for="大阪">大阪</label>
+  <input type="radio" name="question1" value="京都" /> <label for="京都">京都</label>
 
-      function checkAnswer(event) {
-        event.preventDefault();
-        const currentQuestion = questions[currentQuestionIndex];
-        const userAnswer = document.getElementById("answer").value;
-        if (userAnswer === currentQuestion.answer) {
-          currentQuestionIndex++;
-          if (currentQuestionIndex >= questions.length) {
-            alert("クイズ終了！");
-          } else {
-            displayCurrentQuestion();
-            document.getElementById("answer").value = "";
-          }
-        } else {
-          alert("不正解です。もう一度回答してください。");
-        }
-      }
+  <p>2. 地球の周りの軌道を完了するのにかかる時間は？</p>
+  <input type="radio" name="question2" value="1年" /> <label for="1年">1年</label>
+  <input type="radio" name="question2" value="2年" /> <label for="2年">2年</label>
+  <input type="radio" name="question2" value="3年" /> <label for="3年">3年</label>
 
-      displayCurrentQuestion();
+  <p>3. 水の化学式は何ですか？</p>
+  <input type="radio" name="question3" value="H2O" /> <label for="H2O">H2O</label>
+  <input type="radio" name="question3" value="H2O2" /> <label for="H2O2">H2O2</label>
+  <input type="radio" name="question3" value="H3O" /> <label for="H3O">H3O</label>
 
-      const form = document.querySelector("form");
-      form.addEventListener("submit", checkAnswer);
-    </script>
-  </body>
+  <input type="submit" value="送信" />
+</form>
+
+<p>結果は次のページで表示されます。</p>
+</body>
 </html>
