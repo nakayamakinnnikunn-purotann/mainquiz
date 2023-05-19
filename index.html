@@ -41,6 +41,9 @@ color: red;
 <li class="answer">2</li>
 <li class="answer">3</li>
 </ul>
+<div class="answer-key">
+<p>答え：2</p>
+</div>
 </div>
 <div class="quiz">
 <h2>2番目の質問</h2>
@@ -50,6 +53,9 @@ color: red;
 <li class="answer">大阪</li>
 <li class="answer">名古屋</li>
 </ul>
+<div class="answer-key">
+<p>答え：東京</p>
+</div>
 </div>
 <div class="quiz">
 <h2>3番目の質問</h2>
@@ -59,7 +65,11 @@ color: red;
 <li class="answer">9</li>
 <li class="answer">10</li>
 </ul>
+<div class="answer-key">
+<p>答え：8</p>
 </div>
+</div>
+<input type="text" name="username" placeholder="ユーザー名を入力してください">
 <input type="submit" value="提出">
 <input type="reset" value="リセット">
 
@@ -74,6 +84,7 @@ answers.push($(this).val());
 
 // 結果をメールで送信する
 var email = prompt('結果を送信するメールアドレスを入力してください:');
+var username = $('input[name="username"]').val();
 if (email) {
 var message = 'あなたの結果は次のとおりです。\n\n';
 for (var i = 0; i < answers.length; i++) {
@@ -83,7 +94,7 @@ message += answers[i] + '\n';
 var mail = new XMLHttpRequest();
 mail.open('POST', 'mailto:' + email);
 mail.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
-mail.send(message + "\n現在時刻は" + new Date());
+mail.send(message + "\n現在時刻は" + new Date() + "\nユーザー名は" + username);
 }
 }
 
