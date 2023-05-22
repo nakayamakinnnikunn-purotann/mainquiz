@@ -1,109 +1,114 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>自由解答式クイズ</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-      #quiz {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
-      #question {
-        font-size: 2em;
-      }
-      #answer {
-        font-size: 1.5em;
-        margin-top: 1em;
-        padding: 0.5em;
-      }
-      button {
-        margin-top: 1em;
-        font-size: 1.5em;
-        padding: 0.5em 1em;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="quiz">
-      <h2 id="question"></h2>
-      <form>
-        <input type="text" id="answer" placeholder="回答を入力してください">
-        <button type="submit">回答する</button>
-      </form>
-    </div>
-    <script>
-      const questions = [
-{
-  question: "電子の流れと電流の流れは□になっている（漢字一文字）",
-  answer: "逆"
-},
-{
-  question: "電気抵抗が大きい物質のことを何というか。",
-  answer: "不導体"
-},
-{
-  question: "電気抵抗を表す単位は何か。（カタカナで答える）",
-  answer: "オーム"
-},
-{
-  question: "抵抗値が10Ωの抵抗器に、電圧5Vの電源を接続した場合、流れる電流の大きさは何Aか。",
-  answer: "0.5A"
-},
-{
-  question: "抵抗値が2Ωの抵抗器に、電流3Aの電源を接続した場合、電圧の大きさは何Vか。",
-  answer: "6V"
-},
-{
-  question: "抵抗値が4Ωの抵抗器と6Ωの抵抗器を直列に接続した場合、合成抵抗は何オームか。",
-  answer: "10オーム"
-},
-{
-  question: "抵抗値が8Ωの抵抗器と12Ωの抵抗器を並列に接続した場合、合成抵抗は何オームか。",
-  answer: "4.8オーム"
-},
-{
-  question: "電流が3Aの回路に、4Ωの抵抗器を直列に接続した場合、電圧は何Vか。",
-  answer: "12V"
+<html><head>
+<meta charset="utf-8">
+<title>三択クイズ</title>
+</head>
+<body>
+<h1>三択クイズ</h1>
+<hr>
+<h2>問題</h2>
+<div id="text_q">1問目：イルカを漢字で書くとどれ？</div>
+<h2>選択</h2>
+<div id="text_s">【<a href="javascript:anser(1)">1：海豚</a>】【<a href="javascript:anser(2)">2：海牛</a>】【<a href="javascript:anser(3)">3：河豚</a>】</div>
+<h2>解答</h2>
+<div id="text_a"></div>
+
+<script type="text/javascript">
+//問題と解答
+qa = new Array();
+qa[0] = ["イルカを漢字で書くとどれ？","海豚","海牛","河豚",1];
+qa[1] = ["クラゲを漢字で書くとどれ？","水浮","水母","水星",2];
+qa[2] = ["カタツムリを漢字で書くとどれ？","禍牛","鍋牛","蝸牛",3];
+qa[3] = ["バッタを漢字で書くとどれ？","飛蝗","飛蟻","飛脚",1];
+qa[4] = ["タツノオトシゴを英語にするとどれ？","sea fish","sea horse","sea dragon",2];
+qa[5] = ["マグロを英語にするとどれ？","funa","suna","tuna",3];
+qa[6] = ["トンボを英語にするとどれ？","fly","dragonfly","butterfly",2];
+qa[7] = ["ヒトデを英語にするとどれ？","starfish","starshell","starmine",1];
+qa[8] = ["恒星の中で最も明るい星は？","デネブ","スピカ","シリウス",3];
+qa[9] = ["惑星の中で最も重たいのはどれ？","太陽","木星","天王星",2];
+	qa[10] = ["イルカの漢字は？","海豚","海猪","江豚",1];
+qa[11] = ["パンダの漢字は？","熊猫","パンダ","熊",2];
+qa[12] = ["キリンの漢字は？","麒麟","キリン","麒",1];
+qa[13] = ["ライオンの漢字は？","獅子","ライオン","狒狒",1];
+qa[14] = ["トラの漢字は？","虎","トラ","虎",1];
+qa[15] = ["ゾウの漢字は？","象","ゾウ","鼻",1];
+qa[16] = ["サルの漢字は？","猿","サル","獼猴",1];
+qa[17] = ["キツネの漢字は？","狐","キツネ","貍",1];
+qa[18] = ["ウサギの漢字は？","兎","ウサギ","白兔",1];
+qa[19] = ["ネズミの漢字は？","鼠","ネズミ","齧歯動物",1];
+
+
+//初期設定
+q_sel = 3; //選択肢の数
+
+setReady();
+
+//初期設定
+function setReady() {
+	count = 0; //問題番号
+	ansers = new Array(); //解答記録
+	
+	//最初の問題
+	quiz();
 }
 
-      ];
+//問題表示
+function quiz() {
+	var s, n;
+	//問題
+	document.getElementById("text_q").innerHTML = (count + 1) + "問目：" + qa[count][0];
+	//選択肢
+	s = "";
+	for (n=1;n<=q_sel;n++) {
+		if (qa[count][n] != "") {
+			s += "【<a href='javascript:anser(" + n + ")'>" + n + "：" + qa[count][n] + "</a>】";
+		}
+	}
+	document.getElementById("text_s").innerHTML = s;
+}
 
-      let currentQuestionIndex = 0;
+//解答表示
+function anser(num) {
+	var s;
+	s = (count + 1) + "問目：";
+	//答え合わせ
+	if (num == qa[count][q_sel + 1]) {
+		//正解
+		ansers[count] = "○";
+	} else {
+		ansers[count] = "×";
+	}
+	s += ansers[count] + qa[count][num];
+	document.getElementById("text_a").innerHTML = s;
+	
+	//次の問題を表示
+	count++;
+	if (count < qa.length) {
+		quiz();
+	} else {
+		//終了
+		s = "<table border='2'><caption>成績発表</caption>";
+		//1行目
+		s += "<tr><th>問題</th>";
+		for (n=0;n<qa.length;n++) {
+			s += "<th>" + (n+1) + "</th>";
+		}
+		s += "</tr>";
+		//2行目
+		s += "<tr><th>成績</th>";
+		for (n=0;n<qa.length;n++) {
+			s += "<td>" + ansers[n] + "</td>";
+		}
+		s += "</tr>";
+		s += "</table>";
+		document.getElementById("text_q").innerHTML = s;
+		//次の選択肢
+		s = "【<a href='javascript:history.back()'>前のページに戻る</a>】";
+		s += "【<a href='javascript:setReady()'>同じ問題を最初から</a>】";
+		s += "【<a href=''>次の問題に進む</a>】";
+		document.getElementById("text_s").innerHTML = s;
+	}
+}
+</script>
 
-      function displayCurrentQuestion() {
-        const currentQuestion = questions[currentQuestionIndex];
-        const questionElement = document.getElementById("question");
-        questionElement.textContent = currentQuestion.question;
-      }
 
-      function checkAnswer(event) {
-        event.preventDefault();
-        const currentQuestion = questions[currentQuestionIndex];
-        const userAnswer = document.getElementById("answer").value;
-        if (userAnswer === currentQuestion.answer) {
-          currentQuestionIndex++;
-          if (currentQuestionIndex >= questions.length) {
-            alert("クイズ終了！");
-          } else {
-            displayCurrentQuestion();
-            document.getElementById("answer").value = "";
-          }
-        } else {
-          alert("不正解です。もう一度回答してください。");
-        }
-      }
-
-      displayCurrentQuestion();
-
-      const form = document.querySelector("form");
-      form.addEventListener("submit", checkAnswer);
-    </script>
-  </body>
-</html>
+</body></html>
